@@ -18,19 +18,6 @@ function BestBooks() {
         if (name === 'description') { setDescription(value); }
     }
 
-        //send the new book data to the server
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // 1. Create an object that looks like a book to send to the server
-        let book = { title, description };
-        console.log('Sending book to server', book);
-        // 2. Use axios to make a POST request to the server with object as body
-        let response = await axios.post(`${SERVER}/books`, book);
-        console.log('server response', response.data);
-        // 3. Add the new book from the server to our state (books)
-        setBooks([...books, response.data])
-    }
-
     const handleDelete = async (e) => {
         // delete the book
         console.log('delete', e.target.id);
@@ -44,6 +31,19 @@ function BestBooks() {
         setBooks(newBooks);
     }
 
+    //   send the new book data to the server
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        // 1. Create an object that looks like a book to send to the server
+        let book = { title, description };
+        console.log('Sending book to server', book);
+        // 2. Use axios to make a POST request to the server with object as body
+        let response = await axios.post(`${SERVER}/books`, book);
+        console.log('server response', response.data);
+        // 3. Add the new book from the server to our state (books)
+        setBooks([...books, response.data])
+    }
+
     const fetchBooks = async () => {
         try {
             const response = await axios.get(`${SERVER}/books`);
@@ -54,28 +54,26 @@ function BestBooks() {
         }
     };
 
-    useEffect( () => {
-      // console.log("Mounted Up!");
-      fetchBooks();
-    
-      return () => {
-      //  console.log("Unmounted");
-      }
-  
-    }, []);
+    useEffect(() => {
+        console.log('Mounted Up!');
+        fetchBooks();
+
+        return () => {
+            console.log('Unmounted');
+        };
+    }, [count]);
 
     //   Somewhere here how do we rerender the page to show the update
     return (
         <>
             <p>My Essential Lifelong Learning &amp; Formation Shelf</p>
-            {/* <hr/>
+            <hr>
                 <button onClick={() => setCount(count + 1)}>Increment Count</button>
                 <p>{count}</p>
-            <hr/> */}
+            </hr>
             <form onSubmit={handleSubmit}>
                 <input name="title" placeholder='title' onChange={handleChange} />
                 <input name="description" placeholder='description' onChange={handleChange} />
-                <button type="submit">Save Book</button>
             </form>
             {books.length ? (
                 <Carousel style={{ padding: "5em", background: "#111" }}>
@@ -95,9 +93,10 @@ function BestBooks() {
             ) : (
                 <p>No Books Found :(</p>
             )}
+            {/* TODO: Add code to render the book carousel */}
+            <p>Book Carousel coming soon</p>
         </>
     );
 }
 
 export default BestBooks;
-
