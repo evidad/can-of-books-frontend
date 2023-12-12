@@ -7,7 +7,6 @@ import BestBooks from './components/BestBooks.jsx';
 // import About from './components/About';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 let SERVER = import.meta.env.VITE_SERVER;
 
 function App() {
@@ -26,21 +25,14 @@ function App() {
     <>
       <Router>
         <Header />
+        <button onClick={fetchBestBooks}>Get Some Books</button>
         <Routes>
-          <Route path="/books" element={<BestBooks books={bestBooks} />} />
-          {/* Use the render prop to conditionally render content */}
           <Route
-            path="/books"
-            element={
-              <div>
-                <button onClick={fetchBestBooks}>Get Some Books</button>
-                {/* <BestBooks books={bestBooks} /> */}
-                <Link to="/books">Go to Books</Link>
-              </div>
-            }
-          />
-          {/* Add a placeholder component for 'About' */}
-          <Route path="/about" element={<div>About Page</div>} />
+            exact path="/books"
+            element={<BestBooks bestBooks={bestBooks} />}
+          >
+          </Route>
+          {/* PLACEHOLDER: add a route with a path of '/about' that renders the `About` component */}
         </Routes>
         <Footer />
       </Router>
