@@ -37,3 +37,6 @@ Actual time needed to complete: 70 minutes
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+Conducted pair programming with Negin K. for this project
+
+![Lighthouse Score Lab 11](./assets/lab11-lighthouse.PNG)
