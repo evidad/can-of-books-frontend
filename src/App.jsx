@@ -27,7 +27,7 @@ function App() {
       {/* this router is a component that wraps all the stuff up that means everything inside it are children and the children can receive props */}
       <Router>
         <Header />
-        <button onClick={fetchBestBooks}>Get Some Books</button>
+        {/* <button onClick={fetchBestBooks}>Get Some Books</button> */}
         {/* routes and route are also components */}
         <Routes>
           {/* // path and elements are props
