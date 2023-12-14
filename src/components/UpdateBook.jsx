@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from 'react';
 
-function UpdateForm(props) {
+function UpdateBook(props) {
 
     const [book, setBook] = useState({});
 
     function handleChange(e) {
-        // dog is { breed: "", name: "" }
         setBook( { ...book,  [e.target.name]: e.target.value } );
     }
 
@@ -32,4 +31,4 @@ function UpdateForm(props) {
 
 }
 
-export default UpdateForm;
+export default UpdateBook;
