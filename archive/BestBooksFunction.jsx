@@ -20,13 +20,13 @@ function BestBooks() {
 
     const handleDelete = async (e) => {
         // delete the book
-        console.log('delete', e.target.id);
-        let response = await axios.delete(`${SERVER}/books/${event.target.id}`);
+        console.log('delete', e.target.title);
+        let response = await axios.delete(`${SERVER}/books/${event.target.title}`);
         // thi will return empty object
         let book = response.data;
         // filter returns true or fale
         let newBooks = books.filter((book) => {
-            return book._id !== e.target.id;
+            return book.title !== e.target.title;
         });
         setBooks(newBooks);
     }
@@ -80,11 +80,11 @@ function BestBooks() {
 
                     {
                         books.map((book) => (
-                            <Carousel.Item key={book._id}>
+                            <Carousel.Item key={book.title}>
                                 <img src={`https://placehold.co/800x400?text=${book.title}`} height="400" width="100%" />
                                 <Carousel.Caption>
                                     <p>{book.description}</p>
-                                    <span id={book._id} onClick={handleDelete} style={{ marginLeft: ".5em", color: "red", cursor: "pointer" }}>X</span>
+                                    <span id={book.title} onClick={handleDelete} style={{ marginLeft: ".5em", color: "red", cursor: "pointer" }}>X</span>
                                 </Carousel.Caption>
                             </Carousel.Item>
                         ))}
