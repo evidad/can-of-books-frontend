@@ -33,7 +33,9 @@ function BestBooks() {
 
   const fetchBooks = async () => {
     try {
+      console.log(import.meta.env.VITE_SERVER)
       const response = await axios.get(`${import.meta.env.VITE_SERVER}/books`);
+      console.log(response);
       setBooks(response.data);
     } catch (error) {
       console.error('Error fetching books:', error);

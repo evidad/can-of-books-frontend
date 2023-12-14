@@ -8,7 +8,7 @@ import BestBooks from './components/BestBooks.jsx';
 import About from './components/About';
 // import UpdateBook from './components/UpdateBook.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import './App.css';
 
 function App() {
 
