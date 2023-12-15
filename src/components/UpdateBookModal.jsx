@@ -1,39 +1,39 @@
+// used ChatGPT to integrate modal into update feature
+
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import axios from 'axios';
 
-function UpdateBookModal({ onBookUpdate, books }) {
+function UpdateBookModal({ book, onBookUpdate }) {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [selectedBook, setSelectedBook] = useState(null);
 
   const selectBook = (book) => {
-    setSelectedBook(book);
     setTitle(book.title);
     setDescription(book.description);
-  };
-
-  const handleUpdateBook = async () => {
-    try {
-      const updatedBook = { ...selectedBook, title, description };
-      const response = await axios.put(`${import.meta.env.VITE_SERVER}/books/${selectedBook.title}`, updatedBook);
-      const newBooksList = books.map((book) => (book.title === selectedBook.title ? response.data : book));
-      onBookUpdate(newBooksList);
-      handleClose();
-    } catch (error) {
-      console.error('Error updating book:', error);
-    }
   };
 
   const handleClose = () => {
     setShow(false);
     setTitle('');
     setDescription('');
-    setSelectedBook(null);
   };
 
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    selectBook(book);
+    setShow(true);
+  };
+
+  const handleUpdateBook = () => {
+    const updatedBook = {
+      _id: book._id,
+      title,
+      description,
+    };
+
+    onBookUpdate(updatedBook);
+    handleClose();
+  };
 
   return (
     <>
@@ -51,7 +51,7 @@ function UpdateBookModal({ onBookUpdate, books }) {
               <Form.Label>Title</Form.Label>
               <Form.Control
                 type="text"
-                placeholder={`Enter title (${selectedBook ? selectedBook.title : ''})`}
+                placeholder={`Enter title (${book.title})`}
                 name="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -63,7 +63,7 @@ function UpdateBookModal({ onBookUpdate, books }) {
               <Form.Control
                 as="textarea"
                 rows={3}
-                placeholder={`Enter description (${selectedBook ? selectedBook.description : ''})`}
+                placeholder={`Enter description (${book.description})`}
                 name="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}

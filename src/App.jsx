@@ -6,7 +6,6 @@ import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import BestBooks from './components/BestBooks.jsx';
 import About from './components/About';
-// import UpdateBook from './components/UpdateBook.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -20,7 +19,7 @@ function App() {
         <Routes>
           <Route exact path="/books" element={<BestBooks />} />
           <Route exact path="/about" element={<About />} />
-          <Route exactpath="/" element={<Home />} />
+          <Route exact path="/" element={<Home />} />
         </Routes>
         <Footer />
       </Router>

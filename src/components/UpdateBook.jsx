@@ -1,34 +1,32 @@
-import React, {useState, useEffect} from 'react';
+// originally started with John's code, but couldn't figure out how to work so used ChatGPT and magically works
+
+import React, { useState, useEffect } from 'react';
 
 function UpdateBook(props) {
+  const [book, setBook] = useState({ title: '', description: '' });
 
-    const [book, setBook] = useState({});
+  useEffect(() => {
+    // Update the local state when the prop changes
+    setBook(props.book || { title: '', description: '' });
+  }, [props.book]);
 
-    function handleChange(e) {
-        setBook( { ...book,  [e.target.name]: e.target.value } );
-    }
+  const handleChange = (e) => {
+    setBook({ ...book, [e.target.name]: e.target.value });
+  };
 
-    function handleSubmit(e) { 
-        e.preventDefault();
-        props.handleSubmit(book);
-        e.target.reset();
-        setBook({title:'', description:''});
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Pass the updated book data to the parent component for handling the update
+    props.onBookUpdate(book);
+  };
 
-    // useEffect runs when "something" changes. It watches for things
-    useEffect( () => {
-      console.log("I'm running because props.book changed");
-      setBook(props.book || {});
-    }, [props.book])
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <input onChange={handleChange} name='title' value={book.title} />
-            <input onChange={handleChange} name='description' value={book.description} />
-            <button type='submit'>Update Book</button>
-        </form>
-    )
-
+  return (
+    <form onSubmit={handleSubmit}>
+      <input onChange={handleChange} name="title" value={book.title} />
+      <input onChange={handleChange} name="description" value={book.description} />
+      <button type="submit">Update Book</button>
+    </form>
+  );
 }
 
 export default UpdateBook;
