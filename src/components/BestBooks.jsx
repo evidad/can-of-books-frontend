@@ -3,7 +3,7 @@ import axios from 'axios';
 import { If, Then, Else } from 'react-if';
 import Carousel from 'react-bootstrap/Carousel';
 import BookFormModal from './BookFormModal';
-import UpdateBookModal from './UpdateBookModal';
+import UpdateBook from './UpdateBook';
 
 function BestBooks() {
   const [books, setBooks] = useState([]);
@@ -11,7 +11,7 @@ function BestBooks() {
   const handleBookCreate = async (newBook) => {
     console.log(newBook);
     try {
-      // first paramater is the URL, second parameter is the data
+      // first parameter is the URL, second parameter is the data
       let response = await axios.post(`${import.meta.env.VITE_SERVER}/books`, newBook);
       setBooks([...books, response.data]);
     } catch (error) {
@@ -44,6 +44,17 @@ function BestBooks() {
     }
   };
 
+  const handleBookUpdate = async (updatedBook) => {
+    try {
+      // Send a request to update the book on the server
+      let response = await axios.put(`${import.meta.env.VITE_SERVER}/books/${updatedBook.id}`, updatedBook);
+      // Update the local state with the updated book
+      setBooks(books.map((book) => (book.id === updatedBook.id ? response.data : book)));
+    } catch (error) {
+      console.error('Error updating book:', error);
+    }
+  };
+
   useEffect(() => {
     fetchBooks();
   }, []);
@@ -68,7 +79,8 @@ function BestBooks() {
                   >
                     Delete Book
                   </span>
-                  <UpdateBookModal book={book} onBookUpdate={UpdateBookModal} />
+                  {/* Fix the props passed to UpdateBook */}
+                  <UpdateBook book={book} onBookUpdate={handleBookUpdate} />
                 </Carousel.Caption>
               </Carousel.Item>
             ))}

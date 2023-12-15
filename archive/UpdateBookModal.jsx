@@ -14,17 +14,17 @@ function UpdateBookModal({ onBookUpdate, books }) {
     setDescription(book.description);
   };
 
-  const handleUpdateBook = async () => {
-    try {
-      const updatedBook = { ...selectedBook, title, description };
-      const response = await axios.put(`${import.meta.env.VITE_SERVER}/books/${selectedBook.title}`, updatedBook);
-      const newBooksList = books.map((book) => (book.title === selectedBook.title ? response.data : book));
-      onBookUpdate(newBooksList);
-      handleClose();
-    } catch (error) {
-      console.error('Error updating book:', error);
-    }
-  };
+  // const handleUpdateBook = async () => {
+  //   try {
+  //     const updatedBook = { ...selectedBook, title, description };
+  //     const response = await axios.put(`${import.meta.env.VITE_SERVER}/books/${selectedBook.id}`, updatedBook);
+  //     const newBooksList = books.map((book) => (book.id === selectedBook.id ? response.data : book));
+  //     onBookUpdate(newBooksList);
+  //     handleClose();
+  //   } catch (error) {
+  //     console.error('Error updating book:', error);
+  //   }
+  // };
 
   const handleClose = () => {
     setShow(false);

@@ -1,34 +1,32 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 function UpdateBook(props) {
+  const [updatedBook, setUpdatedBook] = useState({});
 
-    const [book, setBook] = useState({});
+  const handleChange = (e) => {
+    setUpdatedBook({ ...updatedBook, [e.target.name]: e.target.value });
+  };
 
-    function handleChange(e) {
-        setBook( { ...book,  [e.target.name]: e.target.value } );
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Pass the updatedBook data to the parent component for handling the update
+    props.onBookUpdate(updatedBook);
+  };
 
-    function handleSubmit(e) { 
-        e.preventDefault();
-        props.handleSubmit(book);
-        e.target.reset();
-        setBook({title:'', description:''});
-    }
+  useEffect(() => {
+  // Reset the updatedBook state whenever the book prop changes
+  if (props.updatedBook) {
+    setUpdatedBook(props.updatedBook);
+  }
+}, [props.updatedBook]);
 
-    // useEffect runs when "something" changes. It watches for things
-    useEffect( () => {
-      console.log("I'm running because props.book changed");
-      setBook(props.book || {});
-    }, [props.book])
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <input onChange={handleChange} name='title' value={book.title} />
-            <input onChange={handleChange} name='description' value={book.description} />
-            <button type='submit'>Update Book</button>
-        </form>
-    )
-
+  return (
+    <form onSubmit={handleSubmit}>
+      <input id="text" name="title" value={updatedBook.title} onChange={handleChange} />
+      <textarea name="description" value={updatedBook.description} onChange={handleChange} />
+      <button type="submit">Update Book</button>
+    </form>
+  );
 }
 
 export default UpdateBook;
