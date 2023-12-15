@@ -14,18 +14,6 @@ function UpdateBookModal({ onBookUpdate, books }) {
     setDescription(book.description);
   };
 
-  // const handleUpdateBook = async () => {
-  //   try {
-  //     const updatedBook = { ...selectedBook, title, description };
-  //     const response = await axios.put(`${import.meta.env.VITE_SERVER}/books/${selectedBook.id}`, updatedBook);
-  //     const newBooksList = books.map((book) => (book.id === selectedBook.id ? response.data : book));
-  //     onBookUpdate(newBooksList);
-  //     handleClose();
-  //   } catch (error) {
-  //     console.error('Error updating book:', error);
-  //   }
-  // };
-
   const handleClose = () => {
     setShow(false);
     setTitle('');
@@ -34,6 +22,32 @@ function UpdateBookModal({ onBookUpdate, books }) {
   };
 
   const handleShow = () => setShow(true);
+
+  const handleUpdateBook = async () => {
+    if (!selectedBook) {
+      return;
+    }
+
+    const updatedBook = {
+      ...selectedBook,
+      title: title || selectedBook.title,
+      description: description || selectedBook.description,
+    };
+
+    try {
+      // Send a request to update the book on the server
+      const response = await axios.put(`${import.meta.env.VITE_SERVER}/books/${selectedBook._id}`, updatedBook);
+      const updatedBookData = response.data;
+
+      // Call the parent component's update function
+      onBookUpdate(updatedBookData);
+
+      // Close the modal
+      handleClose();
+    } catch (error) {
+      console.error('Error updating book:', error);
+    }
+  };
 
   return (
     <>

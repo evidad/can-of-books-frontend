@@ -33,23 +33,42 @@ function BestBooks() {
   };
 
   // 1. this fetches the books from the server to display on the web browser
-  const fetchBooks = async () => {
+  const fetchBooks = async (book) => {
     try {
       console.log(import.meta.env.VITE_SERVER)
       const response = await axios.get(`${import.meta.env.VITE_SERVER}/books`);
-      console.log(response);
+      console.log('here are the server books', response);
       setBooks(response.data);
     } catch (error) {
       console.error('Error fetching books:', error);
     }
   };
 
-  const handleBookUpdate = async (updatedBook) => {
+  // const handleBookUpdate = async (book) => {
+  //   console.log('sending updated book to server', book);
+  //   try {
+  //     // Send a request to update the book on the server
+  //     let response = await axios.put(`${import.meta.env.VITE_SERVER}/books/${book._id}`, book);
+  //     // Update the local state with the updated book
+  //     setBooks(books.map((existingBook) => (existingBook._id === book._id ? response.data : existingBook)));
+  //   } catch (error) {
+  //     console.error('Error updating book:', error);
+  //   }
+  // };
+
+  const handleBookUpdate = async (book) => {
+    console.log('sending updated book to server', book);
     try {
       // Send a request to update the book on the server
-      let response = await axios.put(`${import.meta.env.VITE_SERVER}/books/${updatedBook.id}`, updatedBook);
-      // Update the local state with the updated book
-      setBooks(books.map((book) => (book.id === updatedBook.id ? response.data : book)));
+      let response = await axios.put(`${import.meta.env.VITE_SERVER}/books/${book._id}`, book);
+      let updatedBook = response.data;
+      console.log('from the sever, the updated book is', updatedBook);
+      // Update the list
+      let newBooksList = books.map( book => {
+        if( book._id === updatedBook._id) { return updatedBook; }
+        else {return book ;}
+      });
+      setBooks(newBooksList);
     } catch (error) {
       console.error('Error updating book:', error);
     }

@@ -1,29 +1,29 @@
+// originally started with John's code, but couldn't figure out how to work so used ChatGPT and magically works
+
 import React, { useState, useEffect } from 'react';
 
 function UpdateBook(props) {
-  const [updatedBook, setUpdatedBook] = useState({});
+  const [book, setBook] = useState({ title: '', description: '' });
+
+  useEffect(() => {
+    // Update the local state when the prop changes
+    setBook(props.book || { title: '', description: '' });
+  }, [props.book]);
 
   const handleChange = (e) => {
-    setUpdatedBook({ ...updatedBook, [e.target.name]: e.target.value });
+    setBook({ ...book, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Pass the updatedBook data to the parent component for handling the update
-    props.onBookUpdate(updatedBook);
+    // Pass the updated book data to the parent component for handling the update
+    props.onBookUpdate(book);
   };
-
-  useEffect(() => {
-  // Reset the updatedBook state whenever the book prop changes
-  if (props.updatedBook) {
-    setUpdatedBook(props.updatedBook);
-  }
-}, [props.updatedBook]);
 
   return (
     <form onSubmit={handleSubmit}>
-      <input id="text" name="title" value={updatedBook.title} onChange={handleChange} />
-      <textarea name="description" value={updatedBook.description} onChange={handleChange} />
+      <input onChange={handleChange} name="title" value={book.title} />
+      <input onChange={handleChange} name="description" value={book.description} />
       <button type="submit">Update Book</button>
     </form>
   );
