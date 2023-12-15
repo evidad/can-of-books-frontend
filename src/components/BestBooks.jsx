@@ -3,15 +3,13 @@ import axios from 'axios';
 import { If, Then, Else } from 'react-if';
 import Carousel from 'react-bootstrap/Carousel';
 import BookFormModal from './BookFormModal';
-import UpdateBook from './UpdateBook';
+import UpdateBookModal from './UpdateBookModal';
 
 function BestBooks() {
   const [books, setBooks] = useState([]);
 
   const handleBookCreate = async (newBook) => {
-    console.log(newBook);
     try {
-      // first parameter is the URL, second parameter is the data
       let response = await axios.post(`${import.meta.env.VITE_SERVER}/books`, newBook);
       setBooks([...books, response.data]);
     } catch (error) {
@@ -32,42 +30,26 @@ function BestBooks() {
     }
   };
 
-  // 1. this fetches the books from the server to display on the web browser
-  const fetchBooks = async (book) => {
+  const fetchBooks = async () => {
     try {
-      console.log(import.meta.env.VITE_SERVER)
+      console.log(import.meta.env.VITE_SERVER);
       const response = await axios.get(`${import.meta.env.VITE_SERVER}/books`);
-      console.log('here are the server books', response);
+      console.log('Here are the server books', response);
       setBooks(response.data);
     } catch (error) {
       console.error('Error fetching books:', error);
     }
   };
 
-  // const handleBookUpdate = async (book) => {
-  //   console.log('sending updated book to server', book);
-  //   try {
-  //     // Send a request to update the book on the server
-  //     let response = await axios.put(`${import.meta.env.VITE_SERVER}/books/${book._id}`, book);
-  //     // Update the local state with the updated book
-  //     setBooks(books.map((existingBook) => (existingBook._id === book._id ? response.data : existingBook)));
-  //   } catch (error) {
-  //     console.error('Error updating book:', error);
-  //   }
-  // };
-
   const handleBookUpdate = async (book) => {
-    console.log('sending updated book to server', book);
     try {
-      // Send a request to update the book on the server
+      console.log('Sending updated book to server', book);
       let response = await axios.put(`${import.meta.env.VITE_SERVER}/books/${book._id}`, book);
       let updatedBook = response.data;
-      console.log('from the sever, the updated book is', updatedBook);
-      // Update the list
-      let newBooksList = books.map( book => {
-        if( book._id === updatedBook._id) { return updatedBook; }
-        else {return book ;}
-      });
+      console.log('From the server, the updated book is', updatedBook);
+      let newBooksList = books.map((existingBook) =>
+        existingBook._id === updatedBook._id ? updatedBook : existingBook
+      );
       setBooks(newBooksList);
     } catch (error) {
       console.error('Error updating book:', error);
@@ -98,8 +80,7 @@ function BestBooks() {
                   >
                     Delete Book
                   </span>
-                  {/* Fix the props passed to UpdateBook */}
-                  <UpdateBook book={book} onBookUpdate={handleBookUpdate} />
+                  <UpdateBookModal book={book} onBookUpdate={handleBookUpdate} />
                 </Carousel.Caption>
               </Carousel.Item>
             ))}

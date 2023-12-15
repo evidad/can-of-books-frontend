@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import axios from 'axios';
 
-function UpdateBookModal({ onBookUpdate, books }) {
+function UpdateBookModal({ book, onBookUpdate }) {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [selectedBook, setSelectedBook] = useState(null);
 
   const selectBook = (book) => {
-    setSelectedBook(book);
     setTitle(book.title);
     setDescription(book.description);
   };
@@ -18,35 +15,22 @@ function UpdateBookModal({ onBookUpdate, books }) {
     setShow(false);
     setTitle('');
     setDescription('');
-    setSelectedBook(null);
   };
 
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    selectBook(book);
+    setShow(true);
+  };
 
-  const handleUpdateBook = async () => {
-    if (!selectedBook) {
-      return;
-    }
-
+  const handleUpdateBook = () => {
     const updatedBook = {
-      ...selectedBook,
-      title: title || selectedBook.title,
-      description: description || selectedBook.description,
+      _id: book._id,
+      title,
+      description,
     };
 
-    try {
-      // Send a request to update the book on the server
-      const response = await axios.put(`${import.meta.env.VITE_SERVER}/books/${selectedBook._id}`, updatedBook);
-      const updatedBookData = response.data;
-
-      // Call the parent component's update function
-      onBookUpdate(updatedBookData);
-
-      // Close the modal
-      handleClose();
-    } catch (error) {
-      console.error('Error updating book:', error);
-    }
+    onBookUpdate(updatedBook);
+    handleClose();
   };
 
   return (
@@ -65,7 +49,7 @@ function UpdateBookModal({ onBookUpdate, books }) {
               <Form.Label>Title</Form.Label>
               <Form.Control
                 type="text"
-                placeholder={`Enter title (${selectedBook ? selectedBook.title : ''})`}
+                placeholder={`Enter title (${book.title})`}
                 name="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -77,7 +61,7 @@ function UpdateBookModal({ onBookUpdate, books }) {
               <Form.Control
                 as="textarea"
                 rows={3}
-                placeholder={`Enter description (${selectedBook ? selectedBook.description : ''})`}
+                placeholder={`Enter description (${book.description})`}
                 name="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
