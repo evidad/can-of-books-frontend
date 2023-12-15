@@ -11,6 +11,7 @@ function BestBooks() {
   const handleBookCreate = async (newBook) => {
     console.log(newBook);
     try {
+      // first paramater is the URL, second parameter is the data
       let response = await axios.post(`${import.meta.env.VITE_SERVER}/books`, newBook);
       setBooks([...books, response.data]);
     } catch (error) {
@@ -20,10 +21,10 @@ function BestBooks() {
 
   const handleDelete = async (e) => {
     try {
-      let response = await axios.delete(`${import.meta.env.VITE_SERVER}/books/${e.target.title}`);
+      let response = await axios.delete(`${import.meta.env.VITE_SERVER}/books/${e.target.id}`);
       let book = response.data;
       let newBooks = books.filter((book) => {
-        return book.title !== e.target.title;
+        return book.title !== e.target.id;
       });
       setBooks(newBooks);
     } catch (error) {
@@ -31,6 +32,7 @@ function BestBooks() {
     }
   };
 
+  // 1. this fetches the books from the server to display on the web browser
   const fetchBooks = async () => {
     try {
       console.log(import.meta.env.VITE_SERVER)
