@@ -4,6 +4,7 @@ import { If, Then, Else } from 'react-if';
 import Carousel from 'react-bootstrap/Carousel';
 import BookFormModal from './BookFormModal';
 import UpdateBookModal from './UpdateBookModal';
+import { Button } from 'react-bootstrap'
 
 function BestBooks() {
   const [books, setBooks] = useState([]);
@@ -73,14 +74,15 @@ function BestBooks() {
                 <img src={`https://placehold.co/800x400?text=${book.title}`} height="400" width="100%" />
                 <Carousel.Caption>
                   <p>{book.description}</p>
-                  <span
+                  <UpdateBookModal book={book} onBookUpdate={handleBookUpdate} />
+                  <Button
+                    variant="danger"
                     id={book.title}
                     onClick={handleDelete}
-                    style={{ marginLeft: '.5em', color: 'red', cursor: 'pointer' }}
+                    style={{ marginLeft: '.5em', cursor: 'pointer' }}
                   >
                     Delete Book
-                  </span>
-                  <UpdateBookModal book={book} onBookUpdate={handleBookUpdate} />
+                  </Button>
                 </Carousel.Caption>
               </Carousel.Item>
             ))}
