@@ -25,9 +25,10 @@ class Profile extends Component {
           possibilities ahead.
         </p>
         <h2>Errol Vidad, PMP, Top Secret/SCI :)</h2>
+        <img id="aboutPic2" src="assets/PXL_20231115_014112122.jpg" alt="image of Errol" />
         <p>
-          Hi, I'm Errol Vidad. Naval Officer = Project Manager = Systems
-          Analyst = Software Developer. I have over a decade of military
+          Hi, I'm Errol Vidad. Naval Officer and Project Manager turned Systems
+          Analyst and now Software Developer. I have over a decade of military
           experience in both active and reserve naval components and a year of
           defense contracting work in information systems. I am passionate
           about formulating innovative software solutions to address military
