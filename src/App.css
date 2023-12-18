@@ -1,6 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-image: url('/assets/pexels-pixabay-159711.jpg');
+    background-image: url('./assets/pexels-pixabay-159711.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -58,6 +58,13 @@ h2 {
 }
 
 p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.about {
     font-size: 18px;
     font-weight: bold;
     color: #333;

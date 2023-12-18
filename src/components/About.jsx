@@ -5,8 +5,8 @@ class Profile extends Component {
 
     return (
       <div className="bio">
-        <img id="aboutPic" src="assets/IMG-1979.jpg" alt="image of Negin" />
-        <p>
+        <img id="aboutPic" src='./src/assets/IMG-1979.jpg' alt="image of Negin" />
+        <p className="about">
           Hello, I'm Negin, a 32-year-old trailblazer with a story shaped by
           resilience and relentless pursuit of dreams.
           <br />
@@ -25,8 +25,8 @@ class Profile extends Component {
           possibilities ahead.
         </p>
         <h2>Errol Vidad, PMP, Top Secret/SCI :)</h2>
-        <img id="aboutPic2" src="assets/PXL_20231115_014112122.jpg" alt="image of Errol" />
-        <p>
+        <img id="aboutPic2" src='./src/assets/PXL_20231115_014112122.jpg' alt="image of Errol" />
+        <p className="about">
           Hi, I'm Errol Vidad. Naval Officer and Project Manager turned Systems
           Analyst and now Software Developer. I have over a decade of military
           experience in both active and reserve naval components and a year of
