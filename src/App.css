@@ -2,7 +2,7 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-image: url('./assets/pexels-pixabay-159711.jpg');
+    background-image: url('/assets/pexels-pixabay-159711.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: repeat;
